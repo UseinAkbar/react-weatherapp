@@ -1,0 +1,207 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* 100% equal to 16px */
+/* 62.5% equal to 10px */
+html {
+  font-size: 62.5%;
+}
+
+body {
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.main {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/sunset1.jpg');
+  background-size: cover;
+  background-position: top;
+  position: relative;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.app {
+  font-size: 1.6rem;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/cold-bg.jpg');
+  background-size: cover;
+  background-position: top;
+  height: 100vh;
+  text-align: center;
+  transition: .5s;
+}
+
+.app.warm {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/warm-bg.jpg');
+  transition: .5s;
+}
+
+main {
+  min-height: 100vh;
+  padding: 2rem;
+
+}
+
+.search-box {
+  width: 100%;
+  margin: 0 0 4rem;
+
+}
+
+.search-box .search-bar {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  display: inline-block;
+  color: #313131;
+  font-size: 2rem;
+  width: 100%;
+  padding: 1.5rem;
+  outline: none;
+  border: none;
+  background-color: rgba(255, 255, 255, .5);
+  border-radius: 0px 0px 1.6rem 1.6rem;
+  transform: translateY(-2.4rem);
+  box-shadow: 0 .6rem .2rem rgba(0, 0, 0, .2);
+  transition: .4s;
+
+}
+
+.search-box .search-bar:focus {
+  box-shadow: 0 .5rem .8rem rgba(0, 0, 0, .2);
+  background-color: rgba(255, 255, 255, .65);
+  transform: translateY(-2.6rem);
+}
+
+.search-box .search-bar:focus:invalid {
+  caret-color: #999
+}
+
+.search-box .search-bar::-webkit-input-placeholder {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: rgba(0, 0, 0, .4);
+}
+
+.search-box .search-bar:focus + .search-button {
+  transform: translateY(.8rem);
+  visibility: visible;
+  opacity: 1;
+}
+
+.search-box .search-button {
+  display: inline-block;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(0, 0, 0, .5);
+  background-color: rgba(255, 255, 255, .65);
+  font-size: 1.4rem;
+  font-weight: 400;
+  outline: none;
+  padding: .5rem;
+  border-radius: .5rem;
+  border: none;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .4);
+  transform: translateY(-5rem);
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+}
+
+.search-box .search-button:active {
+  transform: translateY(-.2rem);
+  box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .2);
+}
+
+.location-box {
+  color: #fff;
+}
+
+.location-box .location {
+  display: inline-block;
+  padding-bottom: .6rem;
+  margin-bottom: .4rem;
+  border-bottom: 1px solid #fff;
+  font-size: 3.2rem;
+  font-weight: 500;
+  text-shadow: .3rem .3rem rgba(50, 50, 70, .5);
+}
+
+.location-box .date {
+  font-size: 1.6rem;
+  font-weight: 300;
+  font-style: italic;
+  text-shadow: .2rem .2rem rgba(50, 50, 70, .5);
+}
+
+.weather-box {
+  color: #fff;
+}
+
+.weather-box .temp {
+  display: block;
+  margin: 3rem auto;
+  background-color: rgba(255, 255, 255, .2);
+  border-radius: 1.6rem;
+  padding: 1.5rem 2.5rem;
+  font-size: 10rem;
+  font-weight: 700;
+  text-shadow: .3rem .3rem rgba(50, 50, 70, .5);
+  box-shadow: .3rem .6rem rgba(0, 0, 0, .2);
+}
+
+.weather-box .weather {
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-shadow: .3rem .3rem rgba(50, 50, 70, .6);
+  animation: moveIn .8s ease infinite alternate forwards;
+}
+
+.weather-box .weather .weather__desc {
+  display: inline-block;
+}
+
+.weather-box .weather .weather__wind {
+  display: inline-block;
+}
+
+
+.title {
+  color: #fff;
+  transform: translateY(2rem);
+}
+
+.title .main-title {
+  font-size: 3.6rem;
+  font-weight: 500;
+  text-shadow: .3rem .3rem rgba(50, 50, 70, .5);
+  margin-bottom: 2rem;
+}
+
+.title .sub-title {
+  font-size: 1.8rem;
+  font-weight: 300;
+  text-shadow: .2rem .2rem rgba(50, 50, 70, .5);
+}
+
+.section-title .copyRight {
+  color: rgba(255, 255, 255, .5);
+  font-size: 1.4rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -1rem);
+}
+
+@keyframes moveIn {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(1rem);
+  }
+}
