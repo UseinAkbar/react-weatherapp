@@ -4,9 +4,16 @@ import axios from 'axios';
 function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({temp: '', name: '', country: '', main: '', icon:'', speed:''});
-  const [url, setUrl] = useState('');
+  const [time, setTime] = useState('');
   const [isDone, setDone] = useState(false);
   const imgUrl = 'http://openweathermap.org/img/wn/' + weather.icon + '@2x.png'
+
+  setInterval(currentTime, 1000);
+
+  function currentTime() {
+    const newTime = new Date().toLocaleTimeString();
+    setTime(newTime);
+  }
 
   const customDate = (d) => {
     const months = [
@@ -42,7 +49,7 @@ function App() {
   }
 
   const api = {
-    key: '9dbd8956b81c98122d6b734b5dd7292a',
+    key: 'dbd7471b028ab6754cce2294feb5b022',
     baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
   }
   const {key, baseUrl} = api;
@@ -93,7 +100,7 @@ function App() {
     : "app"}>
     <main className={!isDone && "main"}>
       <div className="search-box">
-        <input type="text" name='city' placeholder="Search" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
+        <input type="text" name='city' placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
         <button type="submit" onClick={handleClick} className='search-button'>Search</button>
       </div>
       {
@@ -118,6 +125,7 @@ function App() {
             <h1 className="main-title">Weather App</h1>
             <h2 className="sub-title">Check the current weather</h2>
           </div>
+            <div className="realTime">{time}</div>
             <div className="copyRight"><p><em>Copyright &copy; 2020</em></p></div>
           </div>
       }
