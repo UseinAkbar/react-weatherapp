@@ -22,7 +22,7 @@ body {
   background-position: top;
   position: relative;
   padding: 2rem;
-  min-height: 100vh;
+  height: 100vh;
   transition: .4s ease;
 }
 
