@@ -126,11 +126,12 @@ function App() {
             <h2 className="sub-title">Check the current weather</h2>
           </div>
             <div className="realTime">{time}</div>
-            <div className="copyRight"><p><em>Copyright &copy; 2020</em></p></div>
+
           </div>
       }
 
     </main>
+    <div className="copyRight"><p><em>Copyright &copy; 2020</em></p></div>
   </div>
 }
 
