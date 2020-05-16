@@ -263,7 +263,7 @@ main {
   animation: moveTop .8s 1s ease-in 1 alternate forwards;
 }
 
-
+/* Animation */
 @keyframes moveRight {
   0% {
     transform: translateX(-1rem);
