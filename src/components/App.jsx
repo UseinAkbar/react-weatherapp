@@ -6,16 +6,50 @@ function App() {
   const [weather, setWeather] = useState({temp: '', name: '', country: '', main: '', icon:'', speed:''});
   const [time, setTime] = useState('');
   const [isDone, setDone] = useState(false);
-  const imgUrl = 'http://openweathermap.org/img/wn/' + weather.icon + '@2x.png'
+  const [greeting, setGreeting] = useState('');
+  const [background, setBackground] = useState('');
+  const imgUrl = 'http://openweathermap.org/img/wn/' + weather.icon + '@2x.png';
 
-  setInterval(currentTime, 1000);
-
-  function currentTime() {
+  const currentTime = () => {
     const newTime = new Date().toLocaleTimeString();
     setTime(newTime);
   }
 
+  setInterval(currentTime, 1000);
+
+  const greet = () => {
+    const date = new Date();
+    const currentHour = date.getHours();
+
+    if (currentHour < 12) {
+      setGreeting('Good Morning');
+      setBackground('morning');
+    } else if (currentHour > 15 && currentHour <= 18 ) {
+      setGreeting('Good Evening');
+      setBackground('evening');
+    } else if (currentHour <= 15) {
+      setGreeting('Good Afternoon');
+      setBackground('afternoon');
+    } else {
+      setGreeting('Good Night');
+      setBackground('night');
+    }
+  }
+
+  setTimeout(greet, 500);
+
   const customDate = (d) => {
+
+    const days = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ];
+
     const months = [
       'January',
       'February',
@@ -29,15 +63,6 @@ function App() {
       'October',
       'November',
       'December'
-    ];
-    const days = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
     ];
 
     let day = days[d.getDay()];
@@ -98,7 +123,7 @@ function App() {
   weather.temp > 16)
     ? "app warm"
     : "app"}>
-    <main className={!isDone && "main"}>
+    <main className={!isDone && `main ${background}`}>
       <div className="search-box">
         <input type="text" name='city' placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
         <button type="submit" onClick={handleClick} className='search-button'>Search</button>
@@ -109,7 +134,6 @@ function App() {
             <div className="location-box">
               <div className="location">{`${weather.name}, ${weather.country}`}</div>
               <div className="date">{customDate(new Date())}</div>
-
             </div>
             <div className="weather-box">
               <div className="temp">
@@ -121,15 +145,14 @@ function App() {
               </div>
             </div>
           </div>
-          : <div className="section-title"><div className="title">
-            <h1 className="main-title">Weather App</h1>
-            <h2 className="sub-title">Check the current weather</h2>
-          </div>
+          : <div className="section-title">
+            <div className="title">
+              <h1 className="greet-title">{greeting}</h1>
+              <h2 className="sub-title">Check the current weather</h2>
+            </div>
             <div className="realTime">{time}</div>
-
           </div>
       }
-
     </main>
     <div className="copyRight"><p><em>Copyright &copy; 2020</em></p></div>
   </div>

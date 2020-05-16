@@ -17,13 +17,45 @@ body {
 }
 
 .main {
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/sunset2.jpg');
   background-size: cover;
-  background-position: top;
+  background-position: bottom center;
   position: relative;
   padding: 2rem;
   height: 100vh;
   transition: .4s ease;
+}
+
+.morning {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/morning-small.jpg');
+}
+
+.afternoon {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/afternoon-small.jpg');
+}
+
+.evening {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/evening-small.jpg');
+}
+
+.night {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/night-small.jpg');
+}
+
+@media only screen and (min-resolution: 192dpi) and (min-width: 37.5em) {
+  .morning {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/morning.jpg');
+  }
+
+  .afternoon {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/afternoon.jpg');
+  }
+
+  .evening {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/evening.jpg');
+  }
+  .night {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/night.jpg');
+  }
 }
 
 .app {
@@ -176,6 +208,7 @@ main {
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 8rem;
+  width: 100%;
 }
 
 
@@ -184,21 +217,26 @@ main {
   transform: translateY(2rem);
 }
 
-.title .main-title {
+.title .greet-title {
   display: inline-block;
   width: 30rem;
-  border-bottom: 2px solid rgba(255, 255, 255, .3);
+  border-bottom: 2px solid transparent;
   font-size: 3.6rem;
   font-weight: 500;
   text-shadow: .2rem .3rem .2rem rgba(255, 255, 255, .3);
   margin-bottom: 2rem;
   padding-bottom: 1rem;
+  transform: translateY(14rem);
+  opacity: 0;
+  animation: moveBottom 1s ease-in 1 alternate forwards, fadeBorder .5s 1.4s ease-in 1 alternate forwards, shadow 1.2s .5s ease infinite alternate forwards;
 }
 
 .title .sub-title {
   font-size: 1.6rem;
   font-weight: 300;
   text-shadow: .2rem .2rem .2rem rgba(255, 255, 255, .3);
+  opacity: 0;
+  animation: fadeTop .8s .8s ease-in 1 alternate forwards
 }
 
 .copyRight {
@@ -220,8 +258,9 @@ main {
   background-color: rgba(255, 255, 255, .2);
   font-weight: 400;
   text-shadow: .3rem .3rem rgba(50, 50, 70, .4);
+  opacity: 0;
   box-shadow: .3rem .6rem rgba(0, 0, 0, .5);
-
+  animation: moveTop .8s 1s ease-in 1 alternate forwards;
 }
 
 
@@ -249,5 +288,72 @@ main {
   }
   100% {
     transform: translateY(1rem) scale(1.05);
+  }
+}
+
+@keyframes moveBottom {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6rem);
+  }
+  50% {
+    opacity: 0;
+    visibility: visible;
+}
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveTop {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12rem);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shadow {
+  0% {
+    text-shadow: 0 0 .2rem rgba(255, 255, 255, .3);
+  }
+  30% {
+    text-shadow: 0 0 .3rem rgba(255, 255, 255, .4);
+  }
+  50% {
+    text-shadow: 0 0 .4rem rgba(255, 255, 255, .6);
+  }
+  100% {
+    text-shadow: 0 0 .5rem rgba(255, 255, 255, .9);
+  }
+}
+
+@keyframes fadeTop {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10rem);
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeBorder {
+  0% {
+    border-bottom: 2px solid transparent;
+  }
+  100% {
+    border-bottom: 2px solid rgba(255, 255, 255, .3);
   }
 }
