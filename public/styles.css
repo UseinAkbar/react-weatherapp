@@ -18,7 +18,7 @@ body {
 
 .main {
   background-size: cover;
-  background-position: bottom center;
+  background-position: center;
   position: relative;
   padding: 2rem;
   height: 100vh;
@@ -68,13 +68,13 @@ body {
   transition: .4s ease-in;
 }
 
-.app.warm {
+.warm {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/warm-bg.jpg');
   transition: .4s ease-in;
 }
 
 main {
-  min-height: 100vh;
+  height: 100vh;
   padding: 2rem;
 
 }
@@ -82,14 +82,16 @@ main {
 .search-box {
   width: 100%;
   margin: 0 0 4rem;
-
+  position: relative;
+  opacity: 0;
+  animation: boxMove 1s 1.5s ease-in 1 alternate forwards;
 }
 
 .search-box .search-bar {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   display: inline-block;
-  color: #313131;
+  color: rgba(0, 0, 0, .6);
   font-size: 2rem;
   width: 100%;
   padding: 1.5rem;
@@ -119,33 +121,35 @@ main {
 }
 
 .search-box .search-bar:focus + .search-button {
-  transform: translateY(.8rem);
-  visibility: visible;
+  transform: translateY(-64%);
   opacity: 1;
+  visibility: visible;
 }
 
 .search-box .search-bar:focus + .search-button:active {
-  transform: translateY(.9rem);
-  box-shadow: 0 .2rem .4rem rgba(0, 0, 0, .4);
+  transform: translate(1rem, -64%) scale(.96);
 }
 
 .search-box .search-button {
   display: inline-block;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: rgba(0, 0, 0, .5);
-  background-color: rgba(255, 255, 255, .65);
-  font-size: 1.4rem;
-  font-weight: 600;
+  padding: 1rem;
+  padding-left: 1.5rem;
   outline: none;
-  padding: .6rem;
-  border-radius: 1rem;
   border: none;
-  box-shadow: 0 .4rem .8rem rgba(0, 0, 0, .4);
-  transform: translateY(-5rem);
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
   opacity: 0;
   visibility: hidden;
-  transition: .3s;
+  border-left: 1px solid rgba(0, 0, 0, .1);
+  background-color: transparent;
+  transition: .4s;
+}
+
+.search-button .icon {
+  font-size: 2rem;
+  color: rgba(0, 0, 0, .4);
 }
 
 .location-box {
@@ -226,9 +230,8 @@ main {
   text-shadow: .2rem .3rem .2rem rgba(255, 255, 255, .3);
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  transform: translateY(14rem);
   opacity: 0;
-  animation: moveBottom 1s ease-in 1 alternate forwards, fadeBorder .5s 1.4s ease-in 1 alternate forwards, shadow 1.2s .5s ease infinite alternate forwards;
+  animation: moveBottom 1s ease-out 1 alternate forwards, fadeBorder .5s 1.4s ease-in 1 alternate forwards, shadow 1.2s .5s ease infinite alternate forwards;
 }
 
 .title .sub-title {
@@ -249,7 +252,7 @@ main {
 
 .section-title .realTime {
   display: inline-block;
-  width: 20rem;
+  min-width: 24rem;
   margin-top: 6rem;
   font-size: 3.2rem;
   color: #fff;
@@ -295,12 +298,8 @@ main {
   0% {
     opacity: 0;
     visibility: hidden;
-    transform: translateY(6rem);
+    transform: translateY(10rem);
   }
-  50% {
-    opacity: 0;
-    visibility: visible;
-}
   100% {
     opacity: 1;
     visibility: visible;
@@ -355,5 +354,18 @@ main {
   }
   100% {
     border-bottom: 2px solid rgba(255, 255, 255, .3);
+  }
+}
+
+@keyframes boxMove {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10rem) scale(.90);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) scale(1);
   }
 }

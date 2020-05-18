@@ -10,6 +10,7 @@ function App() {
   const [background, setBackground] = useState('');
   const imgUrl = 'http://openweathermap.org/img/wn/' + weather.icon + '@2x.png';
 
+  //Set the title on loading page
   const currentTime = () => {
     const newTime = new Date().toLocaleTimeString();
     setTime(newTime);
@@ -38,6 +39,7 @@ function App() {
 
   setTimeout(greet, 500);
 
+  //Set the main content of the web apps
   const customDate = (d) => {
 
     const days = [
@@ -79,12 +81,12 @@ function App() {
   }
   const {key, baseUrl} = api;
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const cityName = event.target.value;
     setQuery(cityName);
   }
 
-  function fetchData() {
+  const fetchData = () => {
     axios(baseUrl, {
       params: {
         q: query,
@@ -113,7 +115,7 @@ function App() {
     })
   }
 
-  function handleClick() {
+  const handleClick = () => {
     fetchData();
     setDone(true);
     setQuery('');
@@ -126,7 +128,7 @@ function App() {
     <main className={!isDone && `main ${background}`}>
       <div className="search-box">
         <input type="text" name='city' placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
-        <button type="submit" onClick={handleClick} className='search-button'>Search</button>
+        <button type="submit" onClick={handleClick} className='search-button'><i class="icon icon-basic-magnifier"></i></button>
       </div>
       {
         isDone
