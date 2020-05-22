@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import Location from './Location';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faWind } from '@fortawesome/free-solid-svg-icons';
+library.add(faSearch, faWind);
 
 function App() {
   const [query, setQuery] = useState('');
@@ -125,14 +130,14 @@ function App() {
   weather.temp > 16)
     ? "app warm"
     : "app"}>
-    <main className={!isDone && `main ${background}`}>
-      <div className="search-box">
+    <main className={!isDone ? `main ${background}` : undefined} id="mainSearch">
+      <div className="search-box" >
         <input type="text" name='city' placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
-        <button type="submit" onClick={handleClick} className='search-button'><i class="icon icon-basic-magnifier"></i></button>
+        <button type="submit" onClick={handleClick} className='search-button'><FontAwesomeIcon icon='search' className="icon" /></button>
       </div>
       {
         isDone
-          ? <div>
+          ? <div className="setWeather">
             <div className="location-box">
               <div className="location">{`${weather.name}, ${weather.country}`}</div>
               <div className="date">{customDate(new Date())}</div>
@@ -142,8 +147,8 @@ function App() {
                 {Math.round(weather.temp)}°C
               </div>
               <div className="weather">
-                <div className="weather__desc">{weather.main}<img src={imgUrl} /></div>
-                <div className="weather__wind">Wind: {weather.speed}km/h</div>
+                <div className="weather__desc">{weather.main}<img src={imgUrl} alt="weatherIcon" /></div>
+                <div className="weather__wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {weather.speed}km/h</div>
               </div>
             </div>
           </div>
@@ -156,8 +161,10 @@ function App() {
           </div>
       }
     </main>
-    <div className="copyRight"><p><em>Copyright &copy; 2020</em></p></div>
+    {
+      !isDone && <Location />
+    }
   </div>
 }
 
-export default App;
+export default App

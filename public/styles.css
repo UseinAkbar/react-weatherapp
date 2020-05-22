@@ -1,4 +1,4 @@
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
@@ -8,6 +8,12 @@
 /* 62.5% equal to 10px */
 html {
   font-size: 62.5%;
+}
+
+@media only screen and (max-width: 20em) {
+  html {
+    font-size: 50%;
+  }
 }
 
 body {
@@ -25,6 +31,7 @@ body {
   transition: .4s ease;
 }
 
+/* Dynamic background of .main */
 .morning {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/morning-small.jpg');
 }
@@ -40,6 +47,33 @@ body {
 .night {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/night-small.jpg');
 }
+
+
+/* Dynamic background of .section-weather */
+.clear {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/clear-small.jpg');
+}
+
+.clouds {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/clouds-small.jpg');
+}
+
+.rain {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/rain-small.jpg');
+}
+
+.storm {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/storm-small.jpg');
+}
+
+.snow {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/snow-small.jpg');
+}
+
+.mist {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/mist-small.jpg');
+}
+
 
 @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em) {
   .morning {
@@ -58,6 +92,33 @@ body {
   }
 }
 
+@media only screen and (min-resolution: 192dpi) and (min-width: 37.5em) {
+  .clear {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/clear.jpg');
+  }
+
+  .clouds {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/clouds.jpg');
+  }
+
+  .rain {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/rain.jpg');
+  }
+
+  .storm {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/storm.jpg');
+  }
+
+  .snow {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url('images/snow.jpg');
+  }
+
+  .mist {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/mist.jpg');
+  }
+}
+
+
 .app {
   font-size: 1.6rem;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/cold-bg.jpg');
@@ -68,13 +129,19 @@ body {
   transition: .4s ease-in;
 }
 
+@media only screen and (max-width: 20em) {
+  .app {
+    font-size: 1.6rem;
+  }
+}
+
 .warm {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, .1), rgba(0, 0, 0, .75)), url('images/warm-bg.jpg');
   transition: .4s ease-in;
 }
 
 main {
-  height: 100vh;
+  height: 100%;
   padding: 2rem;
 
 }
@@ -84,7 +151,7 @@ main {
   margin: 0 0 4rem;
   position: relative;
   opacity: 0;
-  animation: boxMove 1s 1.5s ease-in 1 alternate forwards;
+  animation: boxMove .6s 1.5s ease-in 1 alternate forwards;
 }
 
 .search-box .search-bar {
@@ -127,7 +194,7 @@ main {
 }
 
 .search-box .search-bar:focus + .search-button:active {
-  transform: translate(1rem, -64%) scale(.96);
+  border-left: 1px solid transparent;
 }
 
 .search-box .search-button {
@@ -136,7 +203,9 @@ main {
   padding-left: 1.5rem;
   outline: none;
   border: none;
+  cursor: pointer;
   position: absolute;
+  height: 80%;
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
@@ -149,14 +218,29 @@ main {
 
 .search-button .icon {
   font-size: 2rem;
-  color: rgba(0, 0, 0, .4);
+  color: rgba(0, 0, 0, .5);
+  transition: .3s;
+}
+
+.search-button .icon:hover {
+  color: rgba(0, 0, 0, .7);
+}
+
+.setWeather {
+  margin-top: 6rem;
+}
+
+@media only screen and (max-width: 20em) {
+  .setWeather {
+    margin-top: 8rem;
+  }
 }
 
 .location-box {
-  color: #fff;
+  color: #eaf6f6;
 }
 
-.location-box .location {
+.location {
   display: inline-block;
   padding-bottom: .6rem;
   margin-bottom: .4rem;
@@ -166,7 +250,7 @@ main {
   text-shadow: .3rem .3rem rgba(50, 50, 70, .5);
 }
 
-.location-box .date {
+.date {
   font-size: 1.6rem;
   font-weight: 300;
   font-style: italic;
@@ -174,10 +258,10 @@ main {
 }
 
 .weather-box {
-  color: #fff;
+  color: #eaf6f6;
 }
 
-.weather-box .temp {
+.temp {
   display: block;
   margin: 3rem auto;
   background-color: rgba(255, 255, 255, .2);
@@ -190,7 +274,7 @@ main {
 }
 
 .weather-box .weather {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 500;
   text-shadow: .3rem .3rem rgba(50, 50, 70, .6);
 
@@ -217,13 +301,12 @@ main {
 
 
 .title {
-  color: #fff;
+  color: #eaf6f6;
   transform: translateY(2rem);
 }
 
 .title .greet-title {
   display: inline-block;
-  width: 30rem;
   border-bottom: 2px solid transparent;
   font-size: 3.6rem;
   font-weight: 500;
@@ -231,7 +314,7 @@ main {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   opacity: 0;
-  animation: moveBottom 1s ease-out 1 alternate forwards, fadeBorder .5s 1.4s ease-in 1 alternate forwards, shadow 1.2s .5s ease infinite alternate forwards;
+  animation: moveBottom 1s ease-out 1 alternate forwards, fadeBorder .8s 1.4s ease 1 alternate forwards, shadow 1.2s .5s ease infinite alternate forwards;
 }
 
 .title .sub-title {
@@ -242,20 +325,12 @@ main {
   animation: fadeTop .8s .8s ease-in 1 alternate forwards
 }
 
-.copyRight {
-  color: rgba(255, 255, 255, .3);
-  font-size: 1rem;
-  width: 100%;
-  position: absolute;
-  bottom: 1rem;
-}
-
 .section-title .realTime {
   display: inline-block;
   min-width: 24rem;
   margin-top: 6rem;
   font-size: 3.2rem;
-  color: #fff;
+  color: #eaf6f6;
   padding: 2rem 2rem;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, .2);
@@ -264,6 +339,221 @@ main {
   opacity: 0;
   box-shadow: .3rem .6rem rgba(0, 0, 0, .5);
   animation: moveTop .8s 1s ease-in 1 alternate forwards;
+}
+
+.container {
+  font-family: inherit;
+  background-color: #eaf6f6
+}
+
+.section-weather {
+  width: 100%;
+  position: relative;
+  padding: 6rem 1rem 15rem;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  color: #eaf6f6;
+}
+
+.weatherBox .weatherTemp {
+  width: 95%;
+}
+
+.locDesc {
+  font-weight: 600;
+}
+
+.locDesc .loc-icon {
+  display: inline-block;
+  animation: slideTop .8s ease infinite alternate forwards;
+}
+
+.locDesc .loc-wind {
+  display: inline-block;
+  animation: slideBottom .8s ease infinite alternate forwards;
+}
+
+.address {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-style: italic;
+  color: #212529;
+  text-shadow: .1rem .1rem rgba(50, 50, 70, .6);
+  background-color: rgba(255, 255, 255, .5);
+  padding: 2rem 0 2rem;
+}
+
+.section-ask {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+  padding: 12rem 0 10rem;
+  overflow: hidden;
+  background-color: #eaf6f6;
+}
+
+.icon-wind {
+  font-size: 3rem;
+}
+
+.icon-road {
+  font-size: 2.5rem;
+}
+
+@media only screen and (min-resolution: 192dpi) and (min-width: 37.5em) {
+  .container {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .4), rgba(0, 0, 0, .55)), url('images/illustration.jpg');
+  }
+}
+
+.imgIllustration {
+  display: inline-block;
+  transform: translate(5rem, 5rem);
+  width: 100%;
+}
+
+.boxButton {
+  width: 90%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.askButton .askHeading {
+  display: inline-block;
+  text-align: left;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: #212529;
+  /* -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(to bottom, black, rgba(255, 255, 255, .1)); */
+  text-shadow: .5rem .5rem .4rem rgba(50, 50, 70, .3);
+}
+
+@media only screen and (max-width: 20em) {
+  .askButton .askHeading {
+    font-size: 2.2rem;
+  }
+}
+
+.button {
+  display: block;
+  padding: 1.6rem;
+  width: 15rem;
+  text-decoration: none;
+  color: #eaf6f6;
+  background-color: #212529;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.button:not(:last-child) {
+  margin-bottom: 2rem;
+  outline: none;
+}
+
+.askButton .askButton-2 {
+  text-decoration: none;
+}
+
+.askButton-2:visited {
+  display: inline-block;
+  padding: 2rem 3rem;
+  text-decoration: none;
+  color: #eaf6f6;
+  background-color: #212529;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.askButton .askButton-1:hover, .askButton .askButton-2:hover {
+  background-color: rgba(255, 255, 255, .6);
+  color: #212529;
+  border: 1.5px solid #212529;
+  transform: translateX(1rem);
+}
+
+.copyRight {
+  display: inline-block;
+  width: 100%;
+  padding: 4rem 0 2rem;
+  color: #eaf6f6;
+  background-color: #212529;
+  margin-top: -.5rem;
+}
+
+.copyRight p {
+  font-size: 1.4rem;
+}
+
+.copyRight p:last-child {
+  font-size: 1rem;
+  margin-top: 1rem;
+  opacity: .4;
+}
+
+.icon-social {
+  display: inline-block;
+  width: 100%;
+}
+
+.icon-github, .icon-instagram {
+  font-size: 2.5rem;
+  display: inline-block;
+  transition: .3s;
+}
+
+.icon-social {
+  margin-bottom: 2rem;
+}
+
+.icon-social a:not(:last-child) {
+  margin-right: 1.5rem;
+  border-right: 1px solid #eaf6f6;
+  padding-right: 1.5rem;
+}
+
+.icon-social a {
+  text-decoration: none;
+  display: inline-block;
+  color: #eaf6f6;
+  transition: .3s;
+}
+
+.icon-social a:visited {
+  text-decoration: none;
+  display: inline-block;
+  color: #eaf6f6;
+}
+
+.icon-social a:last-child:hover {
+  transform: translateY(-.5rem);
+}
+
+.icon-social .icon-github:hover {
+  transform: translateY(-.5rem);
+}
+
+::selection {
+  background-color: grey;
+  color: #eaf6f6;
 }
 
 /* Animation */
@@ -282,6 +572,24 @@ main {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes slideTop {
+  0% {
+    transform: translateY(1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideBottom {
+  0% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 
@@ -351,9 +659,11 @@ main {
 @keyframes fadeBorder {
   0% {
     border-bottom: 2px solid transparent;
+    display: inline-block;
   }
   100% {
     border-bottom: 2px solid rgba(255, 255, 255, .3);
+    width: 30rem;
   }
 }
 
@@ -361,7 +671,7 @@ main {
   0% {
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10rem) scale(.90);
+    transform: translateY(5rem) scale(.90);
   }
   100% {
     opacity: 1;
