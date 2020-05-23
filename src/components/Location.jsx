@@ -3,7 +3,9 @@ import axios from 'axios';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWind, faRoad } from '@fortawesome/free-solid-svg-icons';
-import { faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons';
+import Lottie from 'react-lottie';
+import animationData from '../watermelon-animation.json';
 library.add(faWind, faRoad, faInstagram, faGithub);
 
 function Location({date}) {
@@ -17,6 +19,16 @@ function Location({date}) {
 		baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
 	}
 	const {key, baseUrl} = api;
+
+	const defaultOptions = {
+    loop: true,
+    renderer: 'svg',
+    autoplay: true,
+    animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
 
 	const backgroundWeather = (icon) => {
 
@@ -104,7 +116,6 @@ function Location({date}) {
 			.then(response => {
 				var {address: {county, city, road, city_district}} = response.data;
 				var locData = [county, city, road, city_district, lat, lng];
-				console.log(response.data);
 				fetchData(locData);
 			}).catch(err => {
         console.log(err);
@@ -127,7 +138,11 @@ function Location({date}) {
 
 	return (<div className="container">
 		<div className="illustration-box-top">
-			<img src='../images/student-illustration.svg' alt="People illustration" className="imgIllustration-1"></img>
+			<h3 className="askHeading-1">Curious about the current weather ?</h3>
+			<Lottie options={defaultOptions}
+				height={500}
+				width={500}
+			/>
 		</div>
 		{
 			isAgree ?
@@ -152,7 +167,7 @@ function Location({date}) {
 				<img src='../images/human-illustration.svg' alt="People illustration" className="imgIllustration-2"></img>
 				<div className="boxButton">
 					<div className="askButton">
-						<h3 className="askHeading">Wanna know the weather on your place ?</h3>
+						<h3 className="askHeading-2">Wanna know the weather on your place ?</h3>
 						<button type="submit" onClick={handleClick} className="button askButton-1">Sure !</button>
 						<a href="#mainSearch" className="button askButton-2">Maybe later</a>
 					</div>
@@ -160,7 +175,7 @@ function Location({date}) {
 			</div>
 		}
 		<div className="illustration-box-bottom">
-			<img src='../images/schoolbook.svg' alt="People illustration" className="imgIllustration-3"></img>
+			<img src='../images/schoolbook-colour.svg' alt="People illustration" className="imgIllustration-3"></img>
 		</div>
 		<div className="copyRight">
 			<div className="icon-social">

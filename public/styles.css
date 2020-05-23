@@ -352,6 +352,7 @@ main {
   width: 100%;
   position: relative;
   padding: 10rem 1rem 15rem;
+  margin-top: -1rem;
   text-align: center;
   background-size: cover;
   background-position: center;
@@ -366,11 +367,52 @@ main {
 .illustration-box-top, .illustration-box-bottom {
   width: 100%;
   display: inline-block;
-  padding: 4rem 0;
+  padding: 0 1rem 1rem;
   background-color: #eaf6f6;
   text-align: center;
+  overflow: hidden;
+  position: relative;
 }
 
+.illustration-box-top .askHeading-1 {
+  display: inline-block;
+  width: 75%;
+  text-align: left;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-top: 1rem;
+  color: #212529;
+  position: absolute;
+  top: 30%;
+  right: 0;
+  transform: translate(0%, -50%);
+}
+
+.illustration-box-top .askHeading-1::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  width: 50%;
+  height: .2rem;
+  background-color: #212529;
+  top: 0;
+  left: 0;
+}
+
+.illustration-box-bottom {
+  padding: 4rem 0;
+}
+
+.illustration-box-top div {
+  transform: translate(-20rem, 14rem) rotateY(180deg);
+}
+
+@media only screen and (max-width: 20rem) {
+  .illustration-box-top div {
+    transform: translate(-25rem, 17rem) rotateY(180deg);
+  }
+}
 
 .imgIllustration-1, .imgIllustration-3 {
   width: 80%;
@@ -416,12 +458,13 @@ main {
   transform: translateX(-50%);
   bottom: 0;
   width: 100%;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
   font-size: 1.4rem;
   font-weight: 500;
   font-style: italic;
   color: #eaf6f6;
-  text-shadow: .1rem .1rem rgba(50, 50, 70, .6);
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .4), rgba(0, 0, 0, .5));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, .6), rgba(0, 0, 0, .8));
   padding: 2rem 0 2rem;
 }
 
@@ -433,8 +476,27 @@ main {
   padding: 10rem 0 10rem;
   overflow: hidden;
   background-color: #eaf6f6;
-  border-top: 2px solid #212529;
-  border-bottom: 2px solid #212529;
+  margin-top: -1rem;
+}
+
+.section-ask::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: .2rem;
+  top: 0;
+  right: 0;
+  background-color: #212529;
+}
+
+.section-ask::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: .2rem;
+  bottom: 0;
+  left: 0;
+  background-color: #212529;
 }
 
 .icon-wind {
@@ -459,7 +521,7 @@ main {
   transform: translate(-50%, -50%);
 }
 
-.askButton .askHeading {
+.askButton .askHeading-2 {
   display: inline-block;
   text-align: left;
   font-size: 2.4rem;
@@ -524,6 +586,7 @@ main {
   display: inline-block;
   width: 100%;
   padding: 4rem 0 2rem;
+  margin-top: -.5rem;
   color: #eaf6f6;
   background-color: #212529;
 }
