@@ -162,7 +162,9 @@ function App() {
       }
     </main>
     {
-      !isDone && <Location />
+      !isDone && <Location
+        date={customDate}
+                 />
     }
   </div>
 }

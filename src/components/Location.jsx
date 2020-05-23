@@ -6,7 +6,7 @@ import { faWind, faRoad } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons'
 library.add(faWind, faRoad, faInstagram, faGithub);
 
-function Location() {
+function Location({date}) {
 	const [location, setLocation] = useState({county: '', city: '', road: '', lat: '', lng: ''});
 	const [locWeather, setLocWeather] = useState({temp: '', country: '', main: '', icon:'', speed:''});
 	const [isAgree, setAgree] = useState(false);
@@ -17,41 +17,6 @@ function Location() {
 		baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
 	}
 	const {key, baseUrl} = api;
-
-	const customDate = (d) => {
-
-    const days = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
-    ];
-
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
-
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()];
-    var year = d.getFullYear();
-
-    return `${day}, ${date} ${month} ${year}`;
-  }
 
 	const backgroundWeather = (icon) => {
 
@@ -76,13 +41,14 @@ function Location() {
   }
 
 	const fetchData = (locData) => {
-		var [county, city, road, lat, lng] = locData;
+		var [county, city, road, city_district, lat, lng] = locData;
 		setLocation(prevValue => {
 			return {
 				...prevValue,
 				county: county,
 				city: city,
 				road: road,
+				city_district: city_district,
 				lat: lat,
 				lng: lng
 			}
@@ -136,8 +102,9 @@ function Location() {
 		      }
 		    })
 			.then(response => {
-				var {address: {county, city, road}} = response.data;
-				var locData = [county, city, road, lat, lng]
+				var {address: {county, city, road, city_district}} = response.data;
+				var locData = [county, city, road, city_district, lat, lng];
+				console.log(response.data);
 				fetchData(locData);
 			}).catch(err => {
         console.log(err);
@@ -159,12 +126,15 @@ function Location() {
 	}
 
 	return (<div className="container">
+		<div className="illustration-box-top">
+			<img src='../images/student-illustration.svg' alt="People illustration" className="imgIllustration-1"></img>
+		</div>
 		{
 			isAgree ?
 				<div className= {`section-weather ${background}`} id="sectionWeather">
 					<div className="locationWeather">
 						<div className="location locationWeather-region">{`${location.county}, ${locWeather.country}`}</div>
-						<div className="date locationWeather-date">{customDate(new Date())}</div>
+						<div className="date locationWeather-date">{date(new Date())}</div>
 					</div>
 					<div className="weatherBox">
 						<div className="temp weatherTemp">
@@ -175,13 +145,11 @@ function Location() {
 							<div className="loc-wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {locWeather.speed}km/h</div>
 						</div>
 					</div>
-					<div className="address">
-						<FontAwesomeIcon icon='road' className="icon-road" /> {location.road}
-					</div>
+					<span className="address"><FontAwesomeIcon icon='road' className="icon-road" /> {location.road} / {location.city_district}</span>
 				</div>
 			:
 			<div className="section-ask">
-				<img src='../images/drawkit-illustration.svg' alt="People illustration" className="imgIllustration"></img>
+				<img src='../images/human-illustration.svg' alt="People illustration" className="imgIllustration-2"></img>
 				<div className="boxButton">
 					<div className="askButton">
 						<h3 className="askHeading">Wanna know the weather on your place ?</h3>
@@ -191,6 +159,9 @@ function Location() {
 				</div>
 			</div>
 		}
+		<div className="illustration-box-bottom">
+			<img src='../images/schoolbook.svg' alt="People illustration" className="imgIllustration-3"></img>
+		</div>
 		<div className="copyRight">
 			<div className="icon-social">
 				<a href="https://github.com/UseinAkbar"><FontAwesomeIcon icon={['fab', 'github']} className="icon icon-github" /></a>
@@ -199,7 +170,7 @@ function Location() {
 			<p>Made with ❤️ in Jakarta</p>
 			<p><em>Copyright &copy;useinakbar {new Date().getFullYear()}</em></p>
 		</div>
-	</div>)
+					</div>)
 
 
 }
