@@ -138,7 +138,7 @@ function Location({date}) {
 
 	return (<div className="container">
 		<div className="illustration-box-top">
-			<h3 className="askHeading-1">Curious about the current weather ?</h3>
+			<h3 className="askHeading-1"><span>Curious about the current weather ?</span></h3>
 			<Lottie options={defaultOptions}
 				height={500}
 				width={500}
@@ -167,7 +167,7 @@ function Location({date}) {
 				<img src='../images/human-illustration.svg' alt="People illustration" className="imgIllustration-2"></img>
 				<div className="boxButton">
 					<div className="askButton">
-						<h3 className="askHeading-2">Wanna know the weather on your place ?</h3>
+						<h3 className="askHeading-2"><span>Wanna know the weather on your place ?</span></h3>
 						<button type="submit" onClick={handleClick} className="button askButton-1">Sure !</button>
 						<a href="#mainSearch" className="button askButton-2">Maybe later</a>
 					</div>
@@ -175,7 +175,7 @@ function Location({date}) {
 			</div>
 		}
 		<div className="illustration-box-bottom">
-			<img src='../images/schoolbook-colour.svg' alt="People illustration" className="imgIllustration-3"></img>
+			<img src='../images/schoolbook.svg' alt="People illustration" className="imgIllustration-3"></img>
 		</div>
 		<div className="copyRight">
 			<div className="icon-social">

@@ -344,7 +344,7 @@ main {
 
 .container {
   font-family: inherit;
-  background-color: #eaf6f6;
+  background-color: #212529;
   position: relative;
 }
 
@@ -368,7 +368,7 @@ main {
   width: 100%;
   display: inline-block;
   padding: 0 1rem 1rem;
-  background-color: #eaf6f6;
+  background-color: #212529;
   text-align: center;
   overflow: hidden;
   position: relative;
@@ -381,23 +381,32 @@ main {
   font-size: 2.2rem;
   text-transform: uppercase;
   font-weight: 700;
-  padding-top: 1rem;
-  color: #212529;
+  padding-top: 1.4rem;
+  color: #eaf6f6;
   position: absolute;
   top: 30%;
   right: 0;
-  transform: translate(0%, -50%);
+  transform: translate(-5%, -50%);
+}
+
+.illustration-box-top .askHeading-1 span, .askHeading-2 span {
+  background-color: #eaf6f6;
+  color: #212529;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 1rem;
 }
 
 .illustration-box-top .askHeading-1::before {
   content: '';
   display: inline-block;
   position: absolute;
-  width: 50%;
+  width: 0%;
   height: .2rem;
-  background-color: #212529;
+  background-color: #eaf6f6;
   top: 0;
   left: 0;
+  animation: slideBorder 1s ease infinite alternate forwards;
 }
 
 .illustration-box-bottom {
@@ -405,12 +414,12 @@ main {
 }
 
 .illustration-box-top div {
-  transform: translate(-20rem, 14rem) rotateY(180deg);
+  transform: translate(-21rem, 14rem) rotateY(180deg);
 }
 
 @media only screen and (max-width: 20rem) {
   .illustration-box-top div {
-    transform: translate(-25rem, 17rem) rotateY(180deg);
+    transform: translate(-26rem, 17rem) rotateY(180deg);
   }
 }
 
@@ -429,7 +438,7 @@ main {
 }
 
 .imgIllustration-3 {
-  transform: translate(-30%, 4.4rem);
+  transform: translate(-30%, 4.2rem);
 }
 
 .weatherBox .weatherTemp {
@@ -458,8 +467,6 @@ main {
   transform: translateX(-50%);
   bottom: 0;
   width: 100%;
-  border-top-left-radius: .5rem;
-  border-top-right-radius: .5rem;
   font-size: 1.4rem;
   font-weight: 500;
   font-style: italic;
@@ -475,7 +482,7 @@ main {
   position: relative;
   padding: 10rem 0 10rem;
   overflow: hidden;
-  background-color: #eaf6f6;
+  background-color: #212529;
   margin-top: -1rem;
 }
 
@@ -483,20 +490,20 @@ main {
   content: '';
   position: absolute;
   width: 50%;
-  height: .2rem;
+  height: .3rem;
   top: 0;
   right: 0;
-  background-color: #212529;
+  background-color: #eaf6f6;
 }
 
 .section-ask::after {
   content: '';
   position: absolute;
   width: 50%;
-  height: .2rem;
+  height: .3rem;
   bottom: 0;
   left: 0;
-  background-color: #212529;
+  background-color: #eaf6f6;
 }
 
 .icon-wind {
@@ -528,7 +535,7 @@ main {
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 3rem;
-  color: #212529;
+  color: #eaf6f6;
   /* -webkit-background-clip: text;
   background-clip: text;
   background-image: linear-gradient(to bottom, black, rgba(255, 255, 255, .1)); */
@@ -545,13 +552,13 @@ main {
   padding: 1.6rem;
   width: 15rem;
   text-decoration: none;
-  color: #eaf6f6;
-  background-color: #212529;
+  color: #212529;
+  background-color: #eaf6f6;
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
-  border: 1.5px solid transparent;
   border-radius: 1rem;
+  border: 1.2px solid #212529;
   cursor: pointer;
   transition: .3s;
 }
@@ -569,17 +576,17 @@ main {
   display: inline-block;
   padding: 2rem 3rem;
   text-decoration: none;
-  color: #eaf6f6;
-  background-color: #212529;
+  color: #212529;
+  background-color: #eaf6f6;
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
 }
 
 .askButton .askButton-1:hover, .askButton .askButton-2:hover {
-  background-color: rgba(255, 255, 255, .6);
-  color: #212529;
-  border: 1.5px solid #212529;
+  background-color: #212529;
+  color: #eaf6f6;
+  border: 1.2px solid #eaf6f6;
 }
 
 .copyRight {
@@ -587,8 +594,8 @@ main {
   width: 100%;
   padding: 4rem 0 2rem;
   margin-top: -.5rem;
-  color: #eaf6f6;
-  background-color: #212529;
+  color: #212529;
+  background-color: #eaf6f6;
 }
 
 .copyRight p {
@@ -618,21 +625,21 @@ main {
 
 .icon-social a:not(:last-child) {
   margin-right: 1.5rem;
-  border-right: 1px solid #eaf6f6;
+  border-right: 1px solid #212529;
   padding-right: 1.5rem;
 }
 
 .icon-social a {
   text-decoration: none;
   display: inline-block;
-  color: #eaf6f6;
+  color: #212529;
   transition: .3s;
 }
 
 .icon-social a:visited {
   text-decoration: none;
   display: inline-block;
-  color: #eaf6f6;
+  color: #212529;
 }
 
 .icon-social a:last-child:hover {
@@ -649,6 +656,17 @@ main {
 }
 
 /* Animation */
+
+@keyframes slideBorder {
+  0% {
+    width: 0%;
+    opacity: .5;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
 @keyframes moveRight {
   0% {
     transform: translateX(-1rem);
