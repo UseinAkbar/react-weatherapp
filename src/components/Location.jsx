@@ -2,23 +2,28 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWind, faRoad } from '@fortawesome/free-solid-svg-icons';
+import { faWind, faRoad, faMapMarkerAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons';
 import Lottie from 'react-lottie';
 import animationData from '../watermelon-animation.json';
-library.add(faWind, faRoad, faInstagram, faGithub);
+library.add(faWind, faRoad, faInstagram, faGithub, faMapMarkerAlt, faMapMarkedAlt);
 
 function Location({date}) {
-	const [location, setLocation] = useState({county: '', city: '', road: '', lat: '', lng: ''});
+	const [location, setLocation] = useState({county: '', city: '', road: '', postcode: '', lat: '', lng: ''});
 	const [locWeather, setLocWeather] = useState({temp: '', country: '', main: '', icon:'', speed:''});
 	const [isAgree, setAgree] = useState(false);
 	const [background, setBackground] = useState('');
+	const [imgData, setImgData] = useState('');
 	const imgUrl = 'http://openweathermap.org/img/wn/' + locWeather.icon + '@2x.png';
 	const api = {
 		key: '5a73875b9b94f32104a4fa9ba576eaa2',
+		token: '005b5f421ee408',
 		baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
 	}
-	const {key, baseUrl} = api;
+	const mapUrl = 'https://maps.locationiq.com/v2/staticmap';
+
+
+	const {key, token, baseUrl} = api;
 
 	const defaultOptions = {
     loop: true,
@@ -52,17 +57,36 @@ function Location({date}) {
     }
   }
 
+	const viewMap = () => {
+		axios(mapUrl, {
+      params: {
+        key: token,
+				size: '500x500',
+				zoom: '14',
+				markers: `${location.lat},${location.lng}|icon:small-red-cutout;`,
+				format: 'png'
+      }
+    }).then(response => {
+			var data = response.data;
+			setImgData(data);
+
+
+		}).catch(err => {
+			console.log(err);
+		})
+	}
+
 	const fetchData = (locData) => {
-		var [county, city, road, city_district, lat, lng] = locData;
+		var [county, city, road, postcode, lat, lng] = locData;
 		setLocation(prevValue => {
 			return {
 				...prevValue,
-				county: county,
-				city: city,
-				road: road,
-				city_district: city_district,
-				lat: lat,
-				lng: lng
+				county,
+				city,
+				road,
+				postcode,
+				lat,
+				lng
 			}
 		})
 
@@ -103,7 +127,6 @@ function Location({date}) {
 			var crd = position.coords;
 			var lat = crd.latitude.toString();
 			var lng = crd.longitude.toString();
-			var token = '005b5f421ee408';
 
 			axios('https://us1.locationiq.com/v1/reverse.php', {
 		      params: {
@@ -114,8 +137,9 @@ function Location({date}) {
 		      }
 		    })
 			.then(response => {
-				var {address: {county, city, road, city_district}} = response.data;
-				var locData = [county, city, road, city_district, lat, lng];
+				var {address: {county, city, road, postcode}} = response.data;
+				var locData = [county, city, road, postcode, lat, lng];
+				console.log(response.data);
 				fetchData(locData);
 			}).catch(err => {
         console.log(err);
@@ -147,8 +171,12 @@ function Location({date}) {
 		{
 			isAgree ?
 				<div className= {`section-weather ${background}`} id="sectionWeather">
+					<div className="nav-map" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div>
+					{/* <img src= {`data:../images/png;base64,${imgData}`} alt="map"></img> */}
 					<div className="locationWeather">
-						<div className="location locationWeather-region">{`${location.county}, ${locWeather.country}`}</div>
+						<div className="location locationWeather-region">
+							<FontAwesomeIcon icon='map-marker-alt' className="icon-map-2" /> {`${location.county}, ${locWeather.country}`}
+						</div>
 						<div className="date locationWeather-date">{date(new Date())}</div>
 					</div>
 					<div className="weatherBox">
@@ -160,11 +188,13 @@ function Location({date}) {
 							<div className="loc-wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {locWeather.speed}km/h</div>
 						</div>
 					</div>
-					<span className="address"><FontAwesomeIcon icon='road' className="icon-road" /> {location.road} / {location.city_district}</span>
+					<span className="address">
+						<FontAwesomeIcon icon='road' className="icon-road" /> {location.road} - <img src='../images/mailbox.svg' alt='Mailbox' className="icon-mail"></img>{location.postcode}
+					</span>
 				</div>
 			:
 			<div className="section-ask">
-				<img src='../images/human-illustration.svg' alt="People illustration" className="imgIllustration-2"></img>
+				<img src='../images/human-illustration-1.svg' alt="People illustration" className="imgIllustration-1"></img>
 				<div className="boxButton">
 					<div className="askButton">
 						<h3 className="askHeading-2"><span>Wanna know the weather on your place ?</span></h3>
@@ -175,7 +205,7 @@ function Location({date}) {
 			</div>
 		}
 		<div className="illustration-box-bottom">
-			<img src='../images/schoolbook.svg' alt="People illustration" className="imgIllustration-3"></img>
+			<img src='../images/human-illustration-2.svg' alt="People illustration" className="imgIllustration-2"></img>
 		</div>
 		<div className="copyRight">
 			<div className="icon-social">
