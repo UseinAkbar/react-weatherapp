@@ -23,7 +23,6 @@ function Location({date}) {
 	}
 	const mapUrl = 'https://maps.locationiq.com/v2/staticmap';
 
-
 	const {key, token, baseUrl} = api;
 
 	const defaultOptions = {
@@ -169,7 +168,7 @@ function Location({date}) {
 		{
 			isAgree ?
 				<div className= {`section-weather ${background}`} id="sectionWeather">
-					{ !isDisplay && <div className="nav-map-1" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div>}
+					{ !isDisplay && <a href="#boxMap"><div className="nav-map-1" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div></a>}
 					<div className="locationWeather">
 						<div className="location locationWeather-region">
 							<FontAwesomeIcon icon='map-marker-alt' className="icon-map-2" /> {`${location.county}, ${locWeather.country}`}
@@ -202,7 +201,7 @@ function Location({date}) {
 				</div>
 			</div>
 		}
-		<div className="nav-box">
+		<div className="nav-box" id="boxMap">
 			{ isDisplay && <div className="nav-map-2" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-2" /></div> }
 			{ isDisplay && <img src={URL.createObjectURL(imgData)} alt="map" className="staticMap"></img> }
 		</div>
@@ -215,9 +214,9 @@ function Location({date}) {
 				<a href="https://instagram.com/useinakbarr"><FontAwesomeIcon icon={['fab', 'instagram']} className="icon icon-instagram" /></a>
 			</div>
 			<p>Made with ❤️ in Jakarta</p>
-			<p><em>Copyright &copy;useinakbar {new Date().getFullYear()}</em></p>
+			<p><em>copyright &copy;useinakbar {new Date().getFullYear()}</em></p>
 		</div>
-					</div>)
+	</div>)
 
 
 }

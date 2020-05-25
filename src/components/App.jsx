@@ -3,8 +3,8 @@ import axios from 'axios';
 import Location from './Location';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faWind } from '@fortawesome/free-solid-svg-icons';
-library.add(faSearch, faWind);
+import { faSearch, faWind, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+library.add(faSearch, faWind, faMapMarkerAlt);
 
 function App() {
   const [query, setQuery] = useState('');
@@ -139,7 +139,7 @@ function App() {
         isDone
           ? <div className="setWeather">
             <div className="location-box">
-              <div className="location">{`${weather.name}, ${weather.country}`}</div>
+              <div className="location"><FontAwesomeIcon icon='map-marker-alt' className="icon-map" /> {`${weather.name}, ${weather.country}`}</div>
               <div className="date">{customDate(new Date())}</div>
             </div>
             <div className="weather-box">

@@ -351,6 +351,21 @@ main {
 
 .staticMap {
   width: 100%;
+  animation: zoomInMap .5s ease 1 alternate forwards;
+}
+
+@keyframes zoomInMap {
+  0% {
+    opacity: 0;
+    transform: scale(.6);
+  }
+  50% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .section-weather {
@@ -398,6 +413,7 @@ main {
   box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .5);
   cursor: pointer;
   transition: .3s;
+  z-index: 2;
 }
 
 .nav-map-1:hover, .nav-map-2:hover {
