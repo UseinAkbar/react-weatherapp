@@ -14,6 +14,7 @@ function Location({date}) {
 	const [isAgree, setAgree] = useState(false);
 	const [background, setBackground] = useState('');
 	const [imgData, setImgData] = useState('');
+	const [isDisplay, setDisplay] = useState(false);
 	const imgUrl = 'http://openweathermap.org/img/wn/' + locWeather.icon + '@2x.png';
 	const api = {
 		key: '5a73875b9b94f32104a4fa9ba576eaa2',
@@ -58,19 +59,17 @@ function Location({date}) {
   }
 
 	const viewMap = () => {
-		axios(mapUrl, {
-      params: {
-        key: token,
-				size: '500x500',
-				zoom: '14',
-				markers: `${location.lat},${location.lng}|icon:small-red-cutout;`,
-				format: 'png'
-      }
-    }).then(response => {
+
+	axios({
+  		method: 'get',
+  		url: `${mapUrl}?key=${token}&size=600x600&zoom=18&markers=${location.lat},${location.lng}|icon:large-red-cutout;&format=jpg`,
+  		responseType: 'blob'
+	}).then(response => {
 			var data = response.data;
 			setImgData(data);
-
-
+			setDisplay(prevValue => {
+				return !prevValue
+			});
 		}).catch(err => {
 			console.log(err);
 		})
@@ -139,7 +138,6 @@ function Location({date}) {
 			.then(response => {
 				var {address: {county, city, road, postcode}} = response.data;
 				var locData = [county, city, road, postcode, lat, lng];
-				console.log(response.data);
 				fetchData(locData);
 			}).catch(err => {
         console.log(err);
@@ -171,8 +169,7 @@ function Location({date}) {
 		{
 			isAgree ?
 				<div className= {`section-weather ${background}`} id="sectionWeather">
-					<div className="nav-map" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div>
-					{/* <img src= {`data:../images/png;base64,${imgData}`} alt="map"></img> */}
+					{ !isDisplay && <div className="nav-map-1" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div>}
 					<div className="locationWeather">
 						<div className="location locationWeather-region">
 							<FontAwesomeIcon icon='map-marker-alt' className="icon-map-2" /> {`${location.county}, ${locWeather.country}`}
@@ -191,6 +188,7 @@ function Location({date}) {
 					<span className="address">
 						<FontAwesomeIcon icon='road' className="icon-road" /> {location.road} - <img src='../images/mailbox.svg' alt='Mailbox' className="icon-mail"></img>{location.postcode}
 					</span>
+
 				</div>
 			:
 			<div className="section-ask">
@@ -204,6 +202,10 @@ function Location({date}) {
 				</div>
 			</div>
 		}
+		<div className="nav-box">
+			{ isDisplay && <div className="nav-map-2" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-2" /></div> }
+			{ isDisplay && <img src={URL.createObjectURL(imgData)} alt="map" className="staticMap"></img> }
+		</div>
 		<div className="illustration-box-bottom">
 			<img src='../images/human-illustration-2.svg' alt="People illustration" className="imgIllustration-2"></img>
 		</div>
