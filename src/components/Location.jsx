@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import AOS from 'aos';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWind, faRoad, faMapMarkerAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +10,7 @@ import animationData from '../watermelon-animation.json';
 library.add(faWind, faRoad, faInstagram, faGithub, faMapMarkerAlt, faMapMarkedAlt);
 
 function Location({date}) {
-	const [location, setLocation] = useState({county: '', city: '', road: '', postcode: '', lat: '', lng: ''});
+	const [location, setLocation] = useState({county: '', road: '', postcode: '', lat: '', lng: ''});
 	const [locWeather, setLocWeather] = useState({temp: '', country: '', main: '', icon:'', speed:''});
 	const [isAgree, setAgree] = useState(false);
 	const [background, setBackground] = useState('');
@@ -21,9 +22,9 @@ function Location({date}) {
 		token: '005b5f421ee408',
 		baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
 	}
-	const mapUrl = 'https://maps.locationiq.com/v2/staticmap';
-
 	const {key, token, baseUrl} = api;
+	const mapUrl = 'https://maps.locationiq.com/v2/staticmap';
+	AOS.init();
 
 	const defaultOptions = {
     loop: true,
@@ -61,7 +62,7 @@ function Location({date}) {
 
 	axios({
   		method: 'get',
-  		url: `${mapUrl}?key=${token}&size=600x600&zoom=18&markers=${location.lat},${location.lng}|icon:large-red-cutout;&format=jpg`,
+  		url: `${mapUrl}?key=${token}&size=600x600&zoom=18&markers=${location.lat},${location.lng}|icon:large-red-cutout;&format=png`,
   		responseType: 'blob'
 	}).then(response => {
 			var data = response.data;
@@ -75,12 +76,11 @@ function Location({date}) {
 	}
 
 	const fetchData = (locData) => {
-		var [county, city, road, postcode, lat, lng] = locData;
+		var [county, road, postcode, lat, lng] = locData;
 		setLocation(prevValue => {
 			return {
 				...prevValue,
 				county,
-				city,
 				road,
 				postcode,
 				lat,
@@ -135,8 +135,8 @@ function Location({date}) {
 		      }
 		    })
 			.then(response => {
-				var {address: {county, city, road, postcode}} = response.data;
-				var locData = [county, city, road, postcode, lat, lng];
+				var {address: {county, road, postcode}} = response.data;
+				var locData = [county, road, postcode, lat, lng];
 				fetchData(locData);
 			}).catch(err => {
         console.log(err);
@@ -159,24 +159,24 @@ function Location({date}) {
 
 	return (<div className="container">
 		<div className="illustration-box-top">
-			<h3 className="askHeading-1"><span>Curious about the current weather ?</span></h3>
-			<Lottie options={defaultOptions}
+			<h3 className="askHeading-1" data-aos="fade-left" data-aos-duration="1000"><span>Curious about the current weather ?</span></h3>
+			<div data-aos="fade-up-right" data-aos-duration="1500"><Lottie options={defaultOptions}
 				height={500}
 				width={500}
-			/>
+																														 /></div>
 		</div>
 		{
 			isAgree ?
 				<div className= {`section-weather ${background}`} id="sectionWeather">
-					{ !isDisplay && <a href="#boxMap"><div className="nav-map-1" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div></a>}
-					<div className="locationWeather">
+					{ !isDisplay && <a href="#address"><div className="nav-map-1" onClick={viewMap} data-aos="fade-left" data-aos-duration="1000"><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div></a>}
+					<div className="locationWeather" data-aos="zoom-in-up" data-aos-duration="1200">
 						<div className="location locationWeather-region">
 							<FontAwesomeIcon icon='map-marker-alt' className="icon-map-2" /> {`${location.county}, ${locWeather.country}`}
 						</div>
 						<div className="date locationWeather-date">{date(new Date())}</div>
 					</div>
 					<div className="weatherBox">
-						<div className="temp weatherTemp">
+						<div className="temp weatherTemp" data-aos="zoom-in-up" data-aos-duration="1200">
 							{Math.round(locWeather.temp)}°C
 						</div>
 						<div className="locDesc">
@@ -184,29 +184,33 @@ function Location({date}) {
 							<div className="loc-wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {locWeather.speed}km/h</div>
 						</div>
 					</div>
-					<span className="address">
-						<FontAwesomeIcon icon='road' className="icon-road" /> {location.road} - <img src='../images/mailbox.svg' alt='Mailbox' className="icon-mail"></img>{location.postcode}
+					<span className="address" id="address">
+						{ (location.road) ? <div><FontAwesomeIcon icon='road' className="icon-road" /> {location.road} - <img src='../images/mailbox.svg' alt='Mailbox' className="icon-mail"></img>{location.postcode}</div> :
+						<div><img src='../images/mailbox.svg' alt='Mailbox' className="icon-mail"></img>{location.postcode}</div>
+						}
 					</span>
-
 				</div>
 			:
 			<div className="section-ask">
-				<img src='../images/human-illustration-1.svg' alt="People illustration" className="imgIllustration-1"></img>
+				<div className="box-animation" data-aos="fade-left" data-aos-duration="1000"><img src='../images/human-illustration-1.svg' alt="People illustration" className="imgIllustration-1"></img></div>
 				<div className="boxButton">
 					<div className="askButton">
-						<h3 className="askHeading-2"><span>Wanna know the weather on your place ?</span></h3>
-						<button type="submit" onClick={handleClick} className="button askButton-1">Sure !</button>
-						<a href="#mainSearch" className="button askButton-2">Maybe later</a>
+						<h3 className="askHeading-2" data-aos="fade-down-right" data-aos-duration="1000"><span>Wanna know the weather on your place ?</span></h3>
+						<button type="submit" onClick={handleClick} className="button askButton-1" data-aos="zoom-in-left" data-aos-duration="1200">Sure !</button>
+						<a href="#mainSearch" className="button askButton-2" data-aos="zoom-in-right" data-aos-duration="1200">Maybe later</a>
 					</div>
 				</div>
 			</div>
 		}
-		<div className="nav-box" id="boxMap">
-			{ isDisplay && <div className="nav-map-2" onClick={viewMap}><FontAwesomeIcon icon='map-marked-alt' className="icon-map-2" /></div> }
-			{ isDisplay && <img src={URL.createObjectURL(imgData)} alt="map" className="staticMap"></img> }
-		</div>
+		{ isDisplay
+			&&
+			<div className="nav-box" id="boxMap">
+				<div className="nav-map-2" onClick={viewMap} data-aos="fade-right" data-aos-duration="800"><a href="#boxMap">&times;</a></div>
+				<img src={URL.createObjectURL(imgData)} alt="map" className="staticMap"></img>
+			</div>
+		}
 		<div className="illustration-box-bottom">
-			<img src='../images/human-illustration-2.svg' alt="People illustration" className="imgIllustration-2"></img>
+			<div data-aos="fade-up-right" data-aos-duration="1000"><img src='../images/human-illustration-2.svg' alt="People illustration" className="imgIllustration-2"></img></div>
 		</div>
 		<div className="copyRight">
 			<div className="icon-social">

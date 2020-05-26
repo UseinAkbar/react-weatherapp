@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import AOS from 'aos';
 import Location from './Location';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -131,7 +132,7 @@ function App() {
     ? "app warm"
     : "app"}>
     <main className={!isDone ? `main ${background}` : undefined} id="mainSearch">
-      <div className="search-box" >
+      <div className="search-box" data-aos="zoom-in" data-aos-duration="1000">
         <input type="text" name='city' placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
         <button type="submit" onClick={handleClick} className='search-button'><FontAwesomeIcon icon='search' className="icon" /></button>
       </div>
@@ -154,10 +155,10 @@ function App() {
           </div>
           : <div className="section-title">
             <div className="title">
-              <h1 className="greet-title">{greeting}</h1>
-              <h2 className="sub-title">Check the current weather</h2>
+              <h1 className="greet-title" data-aos="zoom-in-up" data-aos-duration="1500">{greeting}</h1>
+              <h2 className="sub-title" data-aos="zoom-in-up" data-aos-duration="2000">Check the current weather</h2>
             </div>
-            <div className="realTime">{time}</div>
+            <div className="realTime" data-aos="fade-up" data-aos-duration="2500">{time}</div>
           </div>
       }
     </main>
