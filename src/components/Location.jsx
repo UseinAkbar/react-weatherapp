@@ -65,14 +65,17 @@ function Location({date}) {
   		url: `${mapUrl}?key=${token}&size=600x600&zoom=18&markers=${location.lat},${location.lng}|icon:large-red-cutout;&format=png`,
   		responseType: 'blob'
 	}).then(response => {
+			alert('onloading..');
 			var data = response.data;
 			setImgData(data);
-			setDisplay(prevValue => {
-				return !prevValue
-			});
+			setDisplay(true);
 		}).catch(err => {
 			console.log(err);
 		})
+	}
+
+	const closeMap = () => {
+		setDisplay(false);
 	}
 
 	const fetchData = (locData) => {
@@ -151,8 +154,8 @@ function Location({date}) {
 		navigator.geolocation.getCurrentPosition(success, error, options);
 	}
 
-
 	const handleClick = () => {
+		alert('onloading..');
 		getCoordintes();
 		setAgree(true);
 	}
@@ -196,7 +199,7 @@ function Location({date}) {
 				<div className="boxButton">
 					<div className="askButton">
 						<h3 className="askHeading-2" data-aos="fade-down-right" data-aos-duration="1000"><span>Wanna know the weather on your place ?</span></h3>
-						<button type="submit" onClick={handleClick} className="button askButton-1" data-aos="zoom-in-left" data-aos-duration="1200">Sure !</button>
+						<button type="submit" onClick={handleClick}  className="button askButton-1" data-aos="zoom-in-left" data-aos-duration="1200">Sure !</button>
 						<a href="#mainSearch" className="button askButton-2" data-aos="zoom-in-right" data-aos-duration="1200">Maybe later</a>
 					</div>
 				</div>
@@ -205,7 +208,7 @@ function Location({date}) {
 		{ isDisplay
 			&&
 			<div className="nav-box" id="boxMap">
-				<div className="nav-map-2" onClick={viewMap} data-aos="fade-right" data-aos-duration="800"><a href="#boxMap">&times;</a></div>
+				<div className="nav-map-2" onClick={closeMap} data-aos="fade-right" data-aos-duration="800"><a href="#boxMap">&times;</a></div>
 				<img src={URL.createObjectURL(imgData)} alt="map" className="staticMap"></img>
 			</div>
 		}

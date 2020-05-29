@@ -133,7 +133,8 @@ function App() {
     : "app"}>
     <main className={!isDone ? `main ${background}` : undefined} id="mainSearch">
       <div className="search-box" data-aos="zoom-in" data-aos-duration="1000">
-        <input type="text" name='city' placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
+        <input type="text" name='city' id="searchCity" placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
+        <label for="searchCity" className="search-label">Search a city</label>
         <button type="submit" onClick={handleClick} className='search-button'><FontAwesomeIcon icon='search' className="icon" /></button>
       </div>
       {

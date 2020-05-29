@@ -186,15 +186,49 @@ main {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   color: rgba(0, 0, 0, .5);
+  opacity: 0;
+  visibility: hidden;
 }
 
-.search-box .search-bar:focus + .search-button {
+.search-bar + .search-label {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+  color: rgba(0, 0, 0, .5);
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(80%);
+  transition: .3s;
+}
+
+.search-bar:placeholder-shown + .search-label {
+  font-size: 2rem;
+  color: rgba(0, 0, 0, .6);
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(-50%);
+
+}
+
+.search-bar:focus:placeholder-shown + .search-label {
+  transform: translateY(-1.8rem);
+}
+
+.search-box .search-bar:focus ~ .search-button {
   transform: translateY(-64%);
   opacity: 1;
   visibility: visible;
+
 }
 
-.search-box .search-bar:focus + .search-button:active {
+.search-box .search-bar:focus ~ .search-button:active {
   border-left: 1px solid transparent;
 }
 
@@ -255,7 +289,6 @@ main {
   font-size: 1.6rem;
   font-weight: 300;
   font-style: italic;
-  text-shadow: .1rem .2rem rgba(50, 50, 70, .6);
 }
 
 .weather-box {
@@ -761,6 +794,27 @@ main {
 
 .icon-social .icon-github:hover {
   transform: translateY(-.5rem);
+}
+
+.load-box {
+  background-color: rgba(0, 0, 0, .5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-backdrop-filter: blur(1rem);
+  backdrop-filter: blur(1rem);
+}
+
+
+
+.icon-animate {
+  width: 35%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 ::selection {
