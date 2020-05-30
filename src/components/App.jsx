@@ -43,7 +43,7 @@ function App() {
     }
   }
 
-  setTimeout(greet, 500);
+  setTimeout(greet, 100);
 
   //Set the main content of the web apps
   const customDate = (d) => {

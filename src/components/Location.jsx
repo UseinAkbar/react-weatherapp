@@ -65,8 +65,8 @@ function Location({date}) {
   		url: `${mapUrl}?key=${token}&size=600x600&zoom=18&markers=${location.lat},${location.lng}|icon:large-red-cutout;&format=png`,
   		responseType: 'blob'
 	}).then(response => {
-			alert('onloading..');
-			var data = response.data;
+			alert('loading...');
+			const data = response.data;
 			setImgData(data);
 			setDisplay(true);
 		}).catch(err => {
@@ -104,11 +104,11 @@ function Location({date}) {
       setLocWeather(prevValue => {
         return {
           ...prevValue,
-          temp: temp,
-          country: country,
-          main: main,
-          icon: icon,
-          speed: speed
+          temp,
+          country,
+          main,
+          icon,
+          speed
         }
       })
 			backgroundWeather(icon);
@@ -155,7 +155,7 @@ function Location({date}) {
 	}
 
 	const handleClick = () => {
-		alert('onloading..');
+		alert('loading...');
 		getCoordintes();
 		setAgree(true);
 	}
