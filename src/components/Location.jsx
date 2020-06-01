@@ -16,14 +16,14 @@ function Location({date}) {
 	const [background, setBackground] = useState('');
 	const [imgData, setImgData] = useState('');
 	const [isDisplay, setDisplay] = useState(false);
-	const imgUrl = 'http://openweathermap.org/img/wn/' + locWeather.icon + '@2x.png';
 	const api = {
 		key: '5a73875b9b94f32104a4fa9ba576eaa2',
 		token: '005b5f421ee408',
-		baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
+		baseUrl: 'https://api.openweathermap.org/data/2.5/weather',
+		imgUrl: 'http://openweathermap.org/img/wn/' + locWeather.icon + '@2x.png',
+		mapUrl: 'https://maps.locationiq.com/v2/staticmap';
 	}
-	const {key, token, baseUrl} = api;
-	const mapUrl = 'https://maps.locationiq.com/v2/staticmap';
+	const {key, token, baseUrl, imgUrl, mapUrl} = api;
 	AOS.init();
 
 	const defaultOptions = {
@@ -78,8 +78,9 @@ function Location({date}) {
 		setDisplay(false);
 	}
 
+	//Fetch the weather data based on the getCoordintes data
 	const fetchData = (locData) => {
-		var [county, road, postcode, lat, lng] = locData;
+		const [county, road, postcode, lat, lng] = locData;
 		setLocation(prevValue => {
 			return {
 				...prevValue,
@@ -119,15 +120,15 @@ function Location({date}) {
 
 	//Get user coordinates
 	const getCoordintes = () => {
-		var options = {
+		const options = {
 			enableHighAccuracy: true,
 			maximumAge: 0
 		};
 
 		function success(position) {
-			var crd = position.coords;
-			var lat = crd.latitude.toString();
-			var lng = crd.longitude.toString();
+			const crd = position.coords;
+			const lat = crd.latitude.toString();
+			const lng = crd.longitude.toString();
 
 			axios('https://us1.locationiq.com/v1/reverse.php', {
 		      params: {
@@ -138,8 +139,8 @@ function Location({date}) {
 		      }
 		    })
 			.then(response => {
-				var {address: {county, road, postcode}} = response.data;
-				var locData = [county, road, postcode, lat, lng];
+				const {address: {county, road, postcode}} = response.data;
+				const locData = [county, road, postcode, lat, lng];
 				fetchData(locData);
 			}).catch(err => {
         console.log(err);
@@ -147,6 +148,7 @@ function Location({date}) {
 		}
 
 		function error(err) {
+			alert('please allow the google permission to track your phone location first..');
 			console.warn(`ERROR(${err.code}): ${err.message}`);
 		}
 
@@ -166,7 +168,7 @@ function Location({date}) {
 			<div data-aos="fade-up-right" data-aos-duration="1500"><Lottie options={defaultOptions}
 				height={500}
 				width={500}
-																														 /></div>
+				/></div>
 		</div>
 		{
 			isAgree ?
@@ -209,7 +211,7 @@ function Location({date}) {
 			&&
 			<div className="nav-box" id="boxMap">
 				<div className="nav-map-2" onClick={closeMap} data-aos="fade-right" data-aos-duration="800"><a href="#boxMap">&times;</a></div>
-				<img src={URL.createObjectURL(imgData)} alt="map" className="staticMap"></img>
+				<img src={URL.createObjectURL(imgData)} alt="staticMap" className="staticMap"></img>
 			</div>
 		}
 		<div className="illustration-box-bottom">
