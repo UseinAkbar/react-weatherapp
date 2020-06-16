@@ -106,17 +106,18 @@ function App() {
       setWeather(prevValue => {
         return {
           ...prevValue,
-          name: name,
-          temp: temp,
-          country: country,
-          main: main,
-          icon: icon,
-          speed: speed
+          name,
+          temp,
+          country,
+          main,
+          icon,
+          speed
         }
       })
       console.log(`${name} ${country} ${temp} ${main}`);
 
     }).catch(err => {
+      alert('Please check the city name!');
       console.log(err);
     })
   }

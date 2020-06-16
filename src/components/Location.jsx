@@ -11,7 +11,7 @@ library.add(faWind, faRoad, faInstagram, faGithub, faMapMarkerAlt, faMapMarkedAl
 
 function Location({date}) {
 	const [location, setLocation] = useState({county: '', road: '', postcode: '', lat: '', lng: ''});
-	const [locWeather, setLocWeather] = useState({temp: '', country: '', main: '', icon:'', speed:''});
+	const [locWeather, setLocWeather] = useState({temp: '', country: '', main: '', icon:'', speed:'', humidity: ''});
 	const [isAgree, setAgree] = useState(false);
 	const [background, setBackground] = useState('');
 	const [imgData, setImgData] = useState('');
@@ -21,7 +21,7 @@ function Location({date}) {
 		token: '005b5f421ee408',
 		baseUrl: 'https://api.openweathermap.org/data/2.5/weather',
 		imgUrl: 'http://openweathermap.org/img/wn/' + locWeather.icon + '@2x.png',
-		mapUrl: 'https://maps.locationiq.com/v2/staticmap';
+		mapUrl: 'https://maps.locationiq.com/v2/staticmap'
 	}
 	const {key, token, baseUrl, imgUrl, mapUrl} = api;
 	AOS.init();
@@ -99,7 +99,8 @@ function Location({date}) {
         appid: key
       }
     }).then(response => {
-      const {name, main: {temp}, sys: {country}, weather, wind: {speed}} = response.data;
+      const {main: {temp, humidity}, sys: {country}, weather, wind: {speed}} = response.data;
+			console.log(response.data);
       const [currentWeather] = weather;
       const {main, icon} = currentWeather;
       setLocWeather(prevValue => {
@@ -109,7 +110,8 @@ function Location({date}) {
           country,
           main,
           icon,
-          speed
+          speed,
+					humidity
         }
       })
 			backgroundWeather(icon);
@@ -148,7 +150,7 @@ function Location({date}) {
 		}
 
 		function error(err) {
-			alert('please allow the google permission to track your phone location first..');
+			alert('Please allow the google permission to track your phone location first..');
 			console.warn(`ERROR(${err.code}): ${err.message}`);
 		}
 
@@ -157,36 +159,47 @@ function Location({date}) {
 	}
 
 	const handleClick = () => {
-		alert('loading...');
+		alert('Loading...\nMake sure to allow the google permission to tracking your location first.');
 		getCoordintes();
 		setAgree(true);
 	}
 
 	return (<div className="container">
-		<div className="illustration-box-top">
+		{ !isAgree ? 	<div className="illustration-box-top-1">
 			<h3 className="askHeading-1" data-aos="fade-left" data-aos-duration="1000"><span>Curious about the current weather ?</span></h3>
-			<div data-aos="fade-up-right" data-aos-duration="1500"><Lottie options={defaultOptions}
-				height={500}
-				width={500}
-				/></div>
+			<div data-aos="fade-up-right" data-aos-duration="1500">
+				<Lottie options={defaultOptions}
+					height={500}
+					width={500}
+				/>
+			</div>
+		</div> : <div className="illustration-box-top-2">
+			<h3 className="askHeading-2" data-aos="fade-right" data-aos-duration="1200"><span>Search the global cities weather</span></h3>
+			<div data-aos="fade-left" data-aos-duration="1000"><img src='../images/human-wall.svg' alt="People illustration" className="imgIllustration-box"></img></div>
 		</div>
+		}
+
+
 		{
 			isAgree ?
 				<div className= {`section-weather ${background}`} id="sectionWeather">
 					{ !isDisplay && <a href="#address"><div className="nav-map-1" onClick={viewMap} data-aos="fade-left" data-aos-duration="1000"><FontAwesomeIcon icon='map-marked-alt' className="icon-map-1" /></div></a>}
-					<div className="locationWeather" data-aos="zoom-in-up" data-aos-duration="1200">
+					<div className="locationWeather" data-aos="fade-up" data-aos-duration="800">
 						<div className="location locationWeather-region">
 							<FontAwesomeIcon icon='map-marker-alt' className="icon-map-2" /> {`${location.county}, ${locWeather.country}`}
 						</div>
 						<div className="date locationWeather-date">{date(new Date())}</div>
 					</div>
 					<div className="weatherBox">
-						<div className="temp weatherTemp" data-aos="zoom-in-up" data-aos-duration="1200">
+						<div className="temp weatherTemp" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
 							{Math.round(locWeather.temp)}°C
 						</div>
 						<div className="locDesc">
-							<div className="loc-icon">{locWeather.main}<img src={imgUrl} alt="weatherIcon" /></div>
-							<div className="loc-wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {locWeather.speed}km/h</div>
+							<div className="loc-box" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+								<div className="loc-wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {locWeather.speed}km/h</div>
+								<div className="loc-humid"><img src='../images/rain.svg' alt="weatherIcon" className="icon-humid" />{locWeather.humidity}%</div>
+							</div>
+							<div className="loc-icon" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">{locWeather.main}<img src={imgUrl} alt="weatherIcon" className="icon-weather" /></div>
 						</div>
 					</div>
 					<span className="address" id="address">
@@ -197,12 +210,12 @@ function Location({date}) {
 				</div>
 			:
 			<div className="section-ask">
-				<div className="box-animation" data-aos="fade-left" data-aos-duration="1000"><img src='../images/human-illustration-1.svg' alt="People illustration" className="imgIllustration-1"></img></div>
+				<div className="box-animation" data-aos="fade-left" data-aos-duration="800"><img src='../images/human-illustration-1.svg' alt="People illustration" className="imgIllustration-1"></img></div>
 				<div className="boxButton">
 					<div className="askButton">
-						<h3 className="askHeading-2" data-aos="fade-down-right" data-aos-duration="1000"><span>Wanna know the weather on your place ?</span></h3>
-						<button type="submit" onClick={handleClick}  className="button askButton-1" data-aos="zoom-in-left" data-aos-duration="1200">Sure !</button>
-						<a href="#mainSearch" className="button askButton-2" data-aos="zoom-in-right" data-aos-duration="1200">Maybe later</a>
+						<h3 className="askHeading-3" data-aos="fade-up" data-aos-duration="800"><span>Wanna know the weather on your place ?</span></h3>
+						<a href="#sectionWeather" onClick={handleClick}  className="button askButton-1" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">Sure !</a>
+						<a href="#mainSearch" className="button askButton-2" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">Maybe later</a>
 					</div>
 				</div>
 			</div>
@@ -223,10 +236,9 @@ function Location({date}) {
 				<a href="https://instagram.com/useinakbarr"><FontAwesomeIcon icon={['fab', 'instagram']} className="icon icon-instagram" /></a>
 			</div>
 			<p>Made with ❤️ in Jakarta</p>
-			<p><em>copyright &copy;useinakbar {new Date().getFullYear()}</em></p>
+			<p>&copy; {new Date().getFullYear()} by useinakbar.</p>
 		</div>
 	</div>)
-
 
 }
 
