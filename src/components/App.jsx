@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import AOS from 'aos';
-import Location from './Location';
+import Location, {convertToFahrenheit} from './Location';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faWind, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +9,7 @@ library.add(faSearch, faWind, faMapMarkerAlt);
 
 function App() {
   const [query, setQuery] = useState('');
-  const [weather, setWeather] = useState({temp: '', name: '', country: '', main: '', icon:'', speed:''});
+  const [weather, setWeather] = useState({tempC: '', tempF: '', name: '', country: '', main: '', icon:'', speed:''});
   const [time, setTime] = useState('');
   const [isDone, setDone] = useState(false);
   const [greeting, setGreeting] = useState('');
@@ -92,6 +92,17 @@ function App() {
     setQuery(cityName);
   }
 
+  //Fetch the fahrenheit degrees
+  const convertToFahrenheit = (temp) => {
+		const tempF = temp * 9/5 + 32;
+		setWeather(prevValue => {
+			return {
+				...prevValue,
+				tempF
+			}
+		})
+	}
+
   const fetchData = () => {
     axios(baseUrl, {
       params: {
@@ -107,15 +118,14 @@ function App() {
         return {
           ...prevValue,
           name,
-          temp,
+          tempC: temp,
           country,
           main,
           icon,
           speed
         }
       })
-      console.log(`${name} ${country} ${temp} ${main}`);
-
+      convertToFahrenheit(temp);
     }).catch(err => {
       alert('Please check the city name!');
       console.log(err);
@@ -147,7 +157,8 @@ function App() {
             </div>
             <div className="weather-box">
               <div className="temp">
-                {Math.round(weather.temp)}°C
+                {Math.round(weather.tempC)}°C
+                <div className="tempFahrenheit"><span>{Math.round(weather.tempF)}°F</span></div>
               </div>
               <div className="weather">
                 <div className="weather__desc">{weather.main}<img src={imgUrl} alt="weatherIcon" /></div>

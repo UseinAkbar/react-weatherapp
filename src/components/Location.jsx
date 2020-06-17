@@ -11,7 +11,7 @@ library.add(faWind, faRoad, faInstagram, faGithub, faMapMarkerAlt, faMapMarkedAl
 
 function Location({date}) {
 	const [location, setLocation] = useState({county: '', road: '', postcode: '', lat: '', lng: ''});
-	const [locWeather, setLocWeather] = useState({temp: '', country: '', main: '', icon:'', speed:'', humidity: ''});
+	const [locWeather, setLocWeather] = useState({tempC: '', tempF: '', country: '', main: '', icon:'', speed:'', humidity: ''});
 	const [isAgree, setAgree] = useState(false);
 	const [background, setBackground] = useState('');
 	const [imgData, setImgData] = useState('');
@@ -78,6 +78,17 @@ function Location({date}) {
 		setDisplay(false);
 	}
 
+	//Fetch the fahrenheit degrees
+	const convertToFahrenheit = (temp) => {
+		const tempF = temp * 9/5 + 32;
+		setLocWeather(prevValue => {
+			return {
+				...prevValue,
+				tempF
+			}
+		})
+	}
+
 	//Fetch the weather data based on the getCoordintes data
 	const fetchData = (locData) => {
 		const [county, road, postcode, lat, lng] = locData;
@@ -106,7 +117,7 @@ function Location({date}) {
       setLocWeather(prevValue => {
         return {
           ...prevValue,
-          temp,
+          tempC: temp,
           country,
           main,
           icon,
@@ -114,6 +125,7 @@ function Location({date}) {
 					humidity
         }
       })
+			convertToFahrenheit(temp);
 			backgroundWeather(icon);
     }).catch(err => {
       console.log(err);
@@ -150,7 +162,7 @@ function Location({date}) {
 		}
 
 		function error(err) {
-			alert('Please allow the google permission to track your phone location first..');
+			alert('Please allow the google permission to track your phone location first.');
 			console.warn(`ERROR(${err.code}): ${err.message}`);
 		}
 
@@ -159,7 +171,7 @@ function Location({date}) {
 	}
 
 	const handleClick = () => {
-		alert('Loading...\nMake sure to allow the google permission to tracking your location first.');
+		alert('Loading...\nMake sure to allow the google permission for tracking your location first.');
 		getCoordintes();
 		setAgree(true);
 	}
@@ -174,8 +186,8 @@ function Location({date}) {
 				/>
 			</div>
 		</div> : <div className="illustration-box-top-2">
-			<h3 className="askHeading-2" data-aos="fade-right" data-aos-duration="1200"><span>Search the global cities weather</span></h3>
-			<div data-aos="fade-left" data-aos-duration="1000"><img src='../images/human-wall.svg' alt="People illustration" className="imgIllustration-box"></img></div>
+			<h3 className="askHeading-2" data-aos="fade-right" data-aos-duration="800"><span>Search the global cities weather</span></h3>
+			<div data-aos="fade-left" data-aos-duration="800"><img src='../images/human-wall.svg' alt="People illustration" className="imgIllustration-box"></img></div>
 		</div>
 		}
 
@@ -192,14 +204,15 @@ function Location({date}) {
 					</div>
 					<div className="weatherBox">
 						<div className="temp weatherTemp" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-							{Math.round(locWeather.temp)}°C
+							{Math.round(locWeather.tempC)}°C
+							<div className="tempFahrenheit" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200"><span>{Math.round(locWeather.tempF)}°F</span></div>
 						</div>
 						<div className="locDesc">
-							<div className="loc-box" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+							<div className="loc-box" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
 								<div className="loc-wind"><FontAwesomeIcon icon='wind' className="icon-wind" /> {locWeather.speed}km/h</div>
 								<div className="loc-humid"><img src='../images/rain.svg' alt="weatherIcon" className="icon-humid" />{locWeather.humidity}%</div>
 							</div>
-							<div className="loc-icon" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">{locWeather.main}<img src={imgUrl} alt="weatherIcon" className="icon-weather" /></div>
+							<div className="loc-icon" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">{locWeather.main}<img src={imgUrl} alt="weatherIcon" className="icon-weather" /></div>
 						</div>
 					</div>
 					<span className="address" id="address">
@@ -223,12 +236,12 @@ function Location({date}) {
 		{ isDisplay
 			&&
 			<div className="nav-box" id="boxMap">
-				<div className="nav-map-2" onClick={closeMap} data-aos="fade-right" data-aos-duration="800"><a href="#boxMap">&times;</a></div>
+				<div className="nav-map-2" onClick={closeMap} data-aos="fade-left" data-aos-duration="800"><a href="#boxMap">&times;</a></div>
 				<img src={URL.createObjectURL(imgData)} alt="staticMap" className="staticMap"></img>
 			</div>
 		}
 		<div className="illustration-box-bottom">
-			<div data-aos="fade-up-right" data-aos-duration="1000"><img src='../images/human-illustration-2.svg' alt="People illustration" className="imgIllustration-2"></img></div>
+			<div data-aos="fade-up-right" data-aos-duration="800"><img src='../images/human-illustration-2.svg' alt="People illustration" className="imgIllustration-2"></img></div>
 		</div>
 		<div className="copyRight">
 			<div className="icon-social">
