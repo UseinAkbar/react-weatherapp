@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Load from './Load';
 import axios from 'axios';
 import AOS from 'aos';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -16,6 +17,7 @@ function Location({date}) {
 	const [background, setBackground] = useState('');
 	const [imgData, setImgData] = useState('');
 	const [isDisplay, setDisplay] = useState(false);
+	const [isLoad, setLoad] = useState(false);
 	const api = {
 		key: '5a73875b9b94f32104a4fa9ba576eaa2',
 		token: '005b5f421ee408',
@@ -60,15 +62,17 @@ function Location({date}) {
 
 	const viewMap = () => {
 
-	axios({
+		loadAnime('');
+
+		axios({
   		method: 'get',
   		url: `${mapUrl}?key=${token}&size=600x600&zoom=18&markers=${location.lat},${location.lng}|icon:large-red-cutout;&format=png`,
   		responseType: 'blob'
-	}).then(response => {
-			alert('loading...');
+		}).then(response => {
 			const data = response.data;
 			setImgData(data);
 			setDisplay(true);
+			loadAnime(data);
 		}).catch(err => {
 			console.log(err);
 		})
@@ -88,6 +92,11 @@ function Location({date}) {
 			}
 		})
 	}
+
+	//React loading animation while fetching the data
+	const loadAnime = (data) => {
+		( !data ? setLoad(true) : setLoad(false) );
+	};
 
 	//Fetch the weather data based on the getCoordintes data
 	const fetchData = (locData) => {
@@ -127,6 +136,7 @@ function Location({date}) {
       })
 			convertToFahrenheit(temp);
 			backgroundWeather(icon);
+			loadAnime(temp);
     }).catch(err => {
       console.log(err);
     })
@@ -171,15 +181,21 @@ function Location({date}) {
 	}
 
 	const handleClick = () => {
-		alert('Loading...\nMake sure to allow the google permission for tracking your location first.');
+		loadAnime('');
 		getCoordintes();
 		setAgree(true);
+
 	}
 
 	return (<div className="container">
+
+		{
+			isLoad && <Load />
+		}
+
 		{ !isAgree ? 	<div className="illustration-box-top-1">
 			<h3 className="askHeading-1" data-aos="fade-left" data-aos-duration="1000"><span>Curious about the current weather ?</span></h3>
-			<div data-aos="fade-up-right" data-aos-duration="1500">
+			<div data-aos="fade-up-right" data-aos-duration="1000">
 				<Lottie options={defaultOptions}
 					height={500}
 					width={500}
@@ -248,7 +264,7 @@ function Location({date}) {
 				<a href="https://github.com/UseinAkbar"><FontAwesomeIcon icon={['fab', 'github']} className="icon icon-github" /></a>
 				<a href="https://instagram.com/useinakbarr"><FontAwesomeIcon icon={['fab', 'instagram']} className="icon icon-instagram" /></a>
 			</div>
-			<p>Made with ❤️ in Jakarta</p>
+			<p>Made with <span role="img">❤️</span> in Jakarta</p>
 			<p>&copy; {new Date().getFullYear()} by useinakbar.</p>
 		</div>
 	</div>)

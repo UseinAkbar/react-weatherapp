@@ -393,9 +393,28 @@ main {
   overflow: hidden;
 }
 
+.box-load {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .8);
+  -webkit-backdrop-filter: blur(.5rem);
+  backdrop-filter: blur(.5rem);
+  z-index: 5;
+}
+
+.box-load div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .staticMap {
   width: 100%;
-  animation: zoomInMap .8s ease 1 alternate forwards;
+  animation: zoomInMap .8s cubic-bezier(0.25, 1, 0.5, 1) 1 alternate forwards;
 }
 
 @keyframes zoomInMap {

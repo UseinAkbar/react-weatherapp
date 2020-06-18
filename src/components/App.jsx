@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
+import Load from './Load';
 import axios from 'axios';
-import AOS from 'aos';
-import Location, {convertToFahrenheit} from './Location';
+import Location from './Location';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faWind, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+// import ReactLoading from 'react-loading';
 library.add(faSearch, faWind, faMapMarkerAlt);
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [isDone, setDone] = useState(false);
   const [greeting, setGreeting] = useState('');
   const [background, setBackground] = useState('');
+  const [isLoad, setLoad] = useState(false);
   const imgUrl = 'http://openweathermap.org/img/wn/' + weather.icon + '@2x.png';
 
   //Set the title on loading page
@@ -102,6 +104,10 @@ function App() {
 			}
 		})
 	}
+  //React loading animation while fetching the data
+  const loadAnime = (data) => {
+    ( !data ? setLoad(true) : setLoad(false) );
+	};
 
   const fetchData = () => {
     axios(baseUrl, {
@@ -126,13 +132,16 @@ function App() {
         }
       })
       convertToFahrenheit(temp);
+      loadAnime(temp);
     }).catch(err => {
+      setLoad(false);
       alert('Please check the city name!');
       console.log(err);
     })
   }
 
   const handleClick = () => {
+    loadAnime('');
     fetchData();
     setDone(true);
     setQuery('');
@@ -142,8 +151,13 @@ function App() {
   weather.temp > 16)
     ? "app warm"
     : "app"}>
+
+    {
+			isLoad && <Load />
+		}
+
     <main className={!isDone ? `main ${background}` : undefined} id="mainSearch">
-      <div className="search-box" data-aos="zoom-in" data-aos-duration="1000">
+      <div className="search-box" data-aos="fade-down" data-aos-duration="800">
         <input type="text" name='city' id="searchCity" placeholder="Search a city" onChange={handleChange} className="search-bar" value={query} autoComplete="off"/>
         <label for="searchCity" className="search-label">Search a city</label>
         <button type="submit" onClick={handleClick} className='search-button'><FontAwesomeIcon icon='search' className="icon" /></button>
@@ -168,10 +182,10 @@ function App() {
           </div>
           : <div className="section-title">
             <div className="title">
-              <h1 className="greet-title" data-aos="zoom-in-up" data-aos-duration="1500">{greeting}</h1>
-              <h2 className="sub-title" data-aos="zoom-in-up" data-aos-duration="2000">Check the current weather</h2>
+              <h1 className="greet-title" data-aos="fade-up" data-aos-duration="800">{greeting}</h1>
+              <h2 className="sub-title" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">Check the current weather</h2>
             </div>
-            <div className="realTime" data-aos="fade-up" data-aos-duration="2500">{time}</div>
+            <div className="realTime" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">{time}</div>
           </div>
       }
     </main>
