@@ -264,7 +264,7 @@ function Location({date}) {
 				<a href="https://github.com/UseinAkbar"><FontAwesomeIcon icon={['fab', 'github']} className="icon icon-github" /></a>
 				<a href="https://instagram.com/useinakbarr"><FontAwesomeIcon icon={['fab', 'instagram']} className="icon icon-instagram" /></a>
 			</div>
-			<p>Made with <span role="img">❤️</span> in Jakarta</p>
+			<p>Made with ❤️ in Jakarta</p>
 			<p>&copy; {new Date().getFullYear()} by useinakbar.</p>
 		</div>
 	</div>)
