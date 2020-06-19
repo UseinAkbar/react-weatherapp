@@ -120,7 +120,6 @@ function Location({date}) {
       }
     }).then(response => {
       const {main: {temp, humidity}, sys: {country}, weather, wind: {speed}} = response.data;
-			console.log(response.data);
       const [currentWeather] = weather;
       const {main, icon} = currentWeather;
       setLocWeather(prevValue => {
